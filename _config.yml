@@ -104,8 +104,12 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: 'git'
-  repo: 
-    github: 'git@github.com:voidvvv/voidvvv.github.io.git'
-  branch: gh-pages
-  message: "Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
+  - type: 'git'
+    repo: 
+      github: 'git@github.com:voidvvv/voidvvv.github.io.git'
+    branch: gh-pages
+    message: "Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
+  - type: 'git'
+    repo: 'git@gitee.com:voidvvv/voidvvv.git'
+    branch: master
+    message: "Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
