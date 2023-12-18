@@ -1,5 +1,12 @@
 ---
 title: LIBGDX 学习记录（1）
+categories: 
+- java
+- libgdx
+tags: 
+- [java]
+- [game]
+- [libgdx]
 ---
 
 # LIBGDX 学习记录（1）
@@ -9,7 +16,7 @@ title: LIBGDX 学习记录（1）
 ><b>libGDX</b> is a cross-platform Java game development framework based on OpenGL (ES), designed for Windows, Linux, macOS, Android, web browsers, and iOS. It provides a robust and well-established environment for rapid prototyping and iterative development. Unlike other frameworks, libGDX does not impose a specific design or coding style, allowing you the freedom to create games according to your preferences.<br><br>
 github： https://github.com/libgdx/libgdx
 <br>
-<!-- more -->>
+<!-- more -->
 ---
 ### 准备工作
 1. JDK： 建议 11-18. 我个人使用JDK11，感觉非常良好
