@@ -1,6 +1,7 @@
 ---
 title: Vue学习-1
 date: 2023-12-18 19:45:09
+top: 22
 categories:
 - web
 - vue
@@ -48,6 +49,7 @@ Vue 中文官网https://cn.vuejs.org/
 </script>
 </html>
 ```
+
 ## 基本语法
 会发现我们定义的div中显示的是我们定义的vue对象中的属性。这就是一个Vue的入门语法，双大括号，官方称做[**mustache**](https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&tn=baidu&wd=Vue%20mustache&oq=Vue&rsv_pq=fe42335a00002f18&rsv_t=17eaouGpLbNXKYoRVkLeqSKXakpDUEvleZGq%2FLvR%2FwOJ9hBRV4m77vj%2FgaE&rqlang=cn&rsv_enter=1&rsv_dl=tb&rsv_sug3=10&rsv_sug1=7&rsv_sug7=100&rsv_sug2=0&rsv_btype=t&inputT=1618&rsv_sug4=1761)语法。
 最开始的定义Vue对象方法，其实跟java中创建对象比较相似。我认为可以将其看作一个构造函数，该构造函数需要传入一个对象，格式是json格式。这样就好理解了。

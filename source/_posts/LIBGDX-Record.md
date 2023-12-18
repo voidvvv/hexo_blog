@@ -1,5 +1,7 @@
 ---
 title: LIBGDX 学习记录（1）
+date: 2023-12-18 22:22:22
+top: 0
 categories: 
 - java
 - libgdx
