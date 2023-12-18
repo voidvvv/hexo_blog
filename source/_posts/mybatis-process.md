@@ -13,7 +13,7 @@ tags:
 
 mybatis是一个数据库持久层框架。通过给其配置数据源，让其管理我们与数据库的链接，并且它让我们的代码和sql语句实现了分离。基本使用方法如下，
 
-<!-- more -->>
+<!-- more -->
 
 ```java
 public static void main(String[] args) throws IOException {

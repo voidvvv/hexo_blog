@@ -1,6 +1,8 @@
 ---
 title: java包获取路径
 date: 2023-12-18 19:24:53
+categories:
+- java
 tags:
 - java
 ---
