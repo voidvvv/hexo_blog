@@ -96,16 +96,7 @@ include:
 exclude:
 ignore:
 
-# Extensions
-## Plugins: https://hexo.io/plugins/
-## Themes: https://hexo.io/themes/
-theme: next
-
-# Deployment
-## Docs: https://hexo.io/docs/one-command-deployment
-deploy:
-  type: 'git'
-  repo: 
-    github: 'git@github.com:voidvvv/voidvvv.github.io.git'
-  branch: gh-pages
-  message: "Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
+menu:
+  home: / || fa fa-home
+  archives: /archives/ || fa fa-archive
+  about: /about/ || fa fa-user
