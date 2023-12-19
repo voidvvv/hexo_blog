@@ -24,7 +24,7 @@ custom_file_path:
   sidebar: source/_data/sidebar.njk
   #postMeta: source/_data/post-meta.njk
   #postBodyStart: source/_data/post-body-start.njk
-  #postBodyEnd: source/_data/post-body-end.njk
+  postBodyEnd: source/_data/post-body-end.njk
   #footer: source/_data/footer.njk
   #bodyEnd: source/_data/body-end.njk
   #variable: source/_data/variables.styl
@@ -371,12 +371,12 @@ codeblock:
     dark: prism-dark
   # Add copy button on codeblock
   copy_button:
-    enable: false
+    enable: true
     # Available values: default | flat | mac
-    style:
+    style: default
   # Fold code block
   fold:
-    enable: false
+    enable: true
     height: 500
 
 back2top:

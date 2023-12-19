@@ -1,5 +1,5 @@
 ---
-title: LIBGDX 学习记录（1）
+title: LIBGDX 游戏引擎
 date: 2023-12-18 22:22:22
 top: 0
 categories: 
@@ -11,15 +11,20 @@ tags:
 - [libgdx]
 ---
 
-# LIBGDX 学习记录（1）
-> 认识libgdx
+# LIBGDX 游戏引擎
+{% cq %} Java 游戏引擎，享受代码的乐趣 {% endcq %}
+![logo](libgdx_logo.svg)
+<!-- more -->
 
-### 介绍
+
+
+## 介绍
 ><b>libGDX</b> is a cross-platform Java game development framework based on OpenGL (ES), designed for Windows, Linux, macOS, Android, web browsers, and iOS. It provides a robust and well-established environment for rapid prototyping and iterative development. Unlike other frameworks, libGDX does not impose a specific design or coding style, allowing you the freedom to create games according to your preferences.<br><br>
 github： https://github.com/libgdx/libgdx
 <br>
-<!-- more -->
+
 ---
+## Hello World
 ### 准备工作
 1. JDK： 建议 11-18. 我个人使用JDK11，感觉非常良好
 2. 开发工具，正常的java开发集成工具都可以，我个人使用JetBrain的Idea
@@ -42,7 +47,7 @@ github： https://github.com/libgdx/libgdx
 这样，导入依赖会更快更方便，不然的话，我本地实测会比较慢。<br>
 然后接下来就让gradle自动构建就可以了。
 
-### Start!
+### Hello World
 构建好之后，项目看起来应该是这个样子的:
 ![init03](Libgdx_Init03.png)<br>
 其中，desktop目录中，存在一个名为DesktopLauncher的启动类，我们可以直接运行这个启动类。应该会看到一个应用程序启动，如下图：<br>
@@ -50,10 +55,10 @@ github： https://github.com/libgdx/libgdx
 如果看到这个画面，恭喜你，我们已经成功的初始化了一个游戏！
 
 ---
-### Hello World
+
 现在我们看到的仅仅是一个libgdx logo的图片以及红色背景。这显然不是我们最终想要的，我们至少想要一个自己的**hello world**<br>
 我们就需要认识一下core文件夹，下面有一个初始化自带的一个Class，MyGdxGame，它长这个样子：
-```java
+``` java
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -85,9 +90,47 @@ public class MyGdxGame extends ApplicationAdapter {
 		img.dispose();
 	}
 }
-```
-当前程序本质就是每一帧都会循环调用render函数，我们要做的，也就是在render函数中编写我们自己的逻辑即可。
 
-### 参考
-[官方文档](https://libgdx.com/wiki/start/project-generation)<br>
+```
+正是上面这段代码的render函数绘制出了我们的图片，这个其实也是整个程序的主逻辑。
+如果我们想要更改渲染的东西，那么我们要做的工作就是想办法在这里渲染我们想要的东西
+
+### 主要组件
+#### **Game**
+com.badlogic.gdx.ApplicationListener 可以算作整个游戏的入口，我们需要手动实现它。它里面的render方法就是我们的主逻辑。但是但看这个接口，是有点抽象的，因为我们还不太了解具体该怎么做。幸好，libgdx给了我们一个比较好的实现类：**com.badlogic.gdx.Game**
+我们现在已经看到Game类是实现了ApplicationListener接口的，那么我们可以试着把系统自动给我们生成的MyGdxGame类改成继承Game类来试一下.更改后：
+```java
+public class MyGdxGame extends Game { // 只有父类变成了Game
+	SpriteBatch batch;
+	Texture img;
+	
+	@Override
+	public void create () {
+		batch = new SpriteBatch();
+		img = new Texture("badlogic.jpg");
+	}
+
+	@Override
+	public void render () {
+		ScreenUtils.clear(1, 0, 0, 1);
+		batch.begin();
+		batch.draw(img, 0, 0);
+		batch.end();
+	}
+
+	@Override
+	public void dispose () {
+		batch.dispose();
+		img.dispose();
+	}
+}
+```
+然后再次运行，发现没有变化，那么就证明我们更换正确了。我们现在开始就可以使用这个Game当作游戏的起点了！
+当然，这也是Game类的作用之一，还有一个作用就是调度我们的下一个组件，Screen.
+
+#### **Screen**
+
+
+## 参考
+[官方文档](https://libgdx.com/wiki/start/project-generation)
 [官方simple教程](https://libgdx.com/wiki/start/a-simple-game)
