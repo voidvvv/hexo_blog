@@ -224,6 +224,26 @@ Absolute (绝对路径)：
 ```
 总之，我目前最常用的就是internal
 
+## LibGDX 内置 Enviroment
+libgdx 内置了一些可以用来在程序运行中获取资源或者修改程序参数的功能类。这些enviroment被以单例模式放在了 com.badlogic.gdx.Gdx 类中。
+其中每一项都会根据当前运行的系统来分别init。
+{% codeblock  Gdx lang:java %}
+public class Gdx {
+	public static Application app;
+	public static Graphics graphics;
+	public static Audio audio;
+	public static Input input;
+	public static Files files;
+	public static Net net;
+
+	public static GL20 gl;
+	public static GL20 gl20;
+	public static GL30 gl30;
+}
+{% endcodeblock %}
+
+比如，我们可以使用其中的 audio 来管理音频，可以使用files来管理文件资源，可以使用input来处理输入。
+
 ## 参考
 [官方文档](https://libgdx.com/wiki/start/project-generation)
 [官方simple教程](https://libgdx.com/wiki/start/a-simple-game)
