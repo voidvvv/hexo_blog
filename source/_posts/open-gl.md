@@ -25,8 +25,10 @@ tags:
   - [窗口](#窗口)
   - [GLAD](#glad-1)
   - [视口](#视口)
-  - [渲染](#渲染)
+  - [窗口](#窗口-1)
   - [释放资源](#释放资源)
+  - [输入](#输入)
+  - [渲染](#渲染)
 
 
 > 参考资料： https://learnopengl-cn.github.io/
@@ -215,7 +217,7 @@ glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 我们还可以将我们的函数注册到其它很多的回调函数中。比如说，我们可以创建一个回调函数来处理手柄输入变化，处理错误消息等。我们会在创建窗口之后，渲染循环初始化之前注册这些回调函数。
 
-## 渲染
+## 窗口
 我们可不希望只绘制一个图像之后我们的应用程序就立即退出并关闭窗口。我们希望程序在我们主动关闭它之前不断绘制图像并能够接受用户输入。因此，我们需要在程序中添加一个while循环，我们可以把它称之为渲染循环(Render Loop)，它能在我们让GLFW退出前一直保持运行。下面几行的代码就实现了一个简单的渲染循环：
 ```c++
 while(!glfwWindowShouldClose(window))
@@ -247,3 +249,62 @@ return 0;
 如果你看见了一个非常无聊的黑色窗口，那么就对了！我们的Hello World至此成功。
 
 如果程序编译有问题，请先检查连接器选项是否正确，IDE中是否导入了正确的目录（前面教程解释过）。并且请确认你的代码是否正确.
+
+## 输入
+我们同样也希望能够在GLFW中实现一些输入控制，这可以通过使用GLFW的几个输入函数来完成。我们将会使用GLFW的`glfwGetKey`函数，它需要一个窗口以及一个按键作为输入。这个函数将会返回这个按键是否正在被按下。我们将创建一个`processInput`函数来让所有的输入代码保持整洁。
+```c++
+void processInput(GLFWwindow *window)
+{
+    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+}
+```
+这里我们检查用户是否按下了返回键(Esc)（如果没有按下，glfwGetKey将会返回GLFW_RELEASE。如果用户的确按下了返回键，我们将通过使用glfwSetwindowShouldClose把WindowShouldClose属性设置为 true来关闭GLFW。下一次while循环的条件检测将会失败，程序将关闭。
+
+这里需要记住 `glfwGetKey` 函数
+
+我们接下来在渲染循环的每一个迭代中调用`processInput`：
+```c++
+while (!glfwWindowShouldClose(window))
+{
+    processInput(window);
+
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+}
+```
+
+这就给我们一个非常简单的方式来检测特定的键是否被按下，并在每一帧做出处理。
+
+## 渲染
+我们要把所有的渲染(Rendering)操作放到渲染循环中，因为我们想让这些渲染指令在每次渲染循环迭代的时候都能被执行。代码将会是这样的：
+```c++
+// 渲染循环
+while(!glfwWindowShouldClose(window))
+{
+    // 输入
+    processInput(window);
+
+    // 渲染指令
+    ...
+
+    // 检查并调用事件，交换缓冲
+    glfwPollEvents();
+    glfwSwapBuffers(window);
+}
+```
+
+为了测试一切都正常工作，我们使用一个自定义的颜色清空屏幕。在每个新的渲染迭代开始的时候我们总是希望清屏，否则我们仍能看见上一次迭代的渲染结果（这可能是你想要的效果，但通常这不是）。我们可以通过调用`glClear`函数来清空屏幕的颜色缓冲，它接受一个缓冲位(Buffer Bit)来指定要清空的缓冲，可能的缓冲位有`GL_COLOR_BUFFER_BIT`，`GL_DEPTH_BUFFER_BIT`和`GL_STENCIL_BUFFER_BIT`。由于现在我们只关心颜色值，所以我们只清空颜色缓冲。
+
+```c++
+glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+glClear(GL_COLOR_BUFFER_BIT);
+```
+
+注意，除了glClear之外，我们还调用了glClearColor来设置清空屏幕所用的颜色。当调用glClear函数，清除颜色缓冲之后，整个颜色缓冲都会被填充为glClearColor里所设置的颜色。在这里，我们将屏幕设置为了类似黑板的深蓝绿色。
+
+![2024-03-03T004349](2024-03-03T004349.png)
+
+{% note default no-icon %}
+你应该能够回忆起来我们在 OpenGL 这节教程的内容，glClearColor函数是一个状态设置函数，而glClear函数则是一个状态使用的函数，它使用了当前的状态来获取应该清除为的颜色。
+{% endnote %}
