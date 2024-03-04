@@ -193,3 +193,34 @@ int test_0304() {
 我这里定义成了float。。
 这里，indices代表参数下标，所以必须是整数int，我不知道脑子抽什么风了把这里写成了float。
 以此为戒吧。被自己蠢哭
+
+# 2024-03-05 凌晨
+又遇见一个问题。这个问题是不熟悉C++导致的。
+当我读取shader源码准备编译时，出现了shader编译报错，代码如下:
+```c++
+	const char* fragmentSourceCodeC;
+	std::stringstream ss2;
+	std::ifstream fragmentFileHandle;
+	fragmentFileHandle.open(DEFAULT_FRAGMENT_FILE_PATH);
+
+	ss2 << fragmentFileHandle.rdbuf();
+	fragmentFileHandle.close();
+
+	fragmentSourceCodeC = ss2.str().c_str();
+```
+一直编译shader失败。我就打印了`fragmentSourceCodeC`看了下，结果全是乱码汉字。但是这段代码跟之前的唯一区别就是我把生成C字符串省略成一个方法了。
+当代码改回来的时候，一切就正常了;
+```c++
+	std::string fragmentSourceCode;
+	const char* fragmentSourceCodeC;
+	std::stringstream ss2;
+	std::ifstream fragmentFileHandle;
+	fragmentFileHandle.open(DEFAULT_FRAGMENT_FILE_PATH);
+
+	ss2 << fragmentFileHandle.rdbuf();
+	fragmentFileHandle.close();
+
+	fragmentSourceCode = ss2.str();
+	fragmentSourceCodeC = fragmentSourceCode.c_str();
+```
+暂不明确原因，应该是与c++底层的实现有关.
