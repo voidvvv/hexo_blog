@@ -1,0 +1,195 @@
+---
+title: OpenGL 学习中遇到的issue
+date: 2024-03-04 22:32:16
+categories: 
+- c++
+- OpenGL
+- issue
+tags: 
+- [c++]
+- [OpenGL]
+---
+
+![2024-03-02T220734](2024-03-02T220734.png)
+纯粹为了记录自己的愚蠢
+<!-- more -->
+
+# 2024-03-04
+本来想复习一下周末的学习成果的，在没有使用EBO的时候，很开熏，代码一切正常。
+直到我使用了EBO并且脑子抽了。代码如下：
+```c++
+#include <iostream>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include "MyShader.h"
+
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGH 600
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void processInput(GLFWwindow* window);
+
+#define DEFAULT_VERTEX_FILE_PATH "./vertex01.vert"
+#define DEFAULT_FRAGMENT_FILE_PATH "./fragment01.frag"
+
+int test_0304() {
+
+
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGH, "LearnOpenGL", NULL, NULL);
+    if (window == NULL)
+    {
+        std::cout << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
+    // 创建窗口
+    glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);//注册回调
+
+    // 检测窗口是否正常启动，传入内置方法
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+        return -1;
+    }
+    float vertices[] = {
+        // 位置              // 颜色
+         0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // 右下
+        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // 左下
+         0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f ,   // 顶部
+         -0.5f, 0.5f, 0.0f,   0.f, 0.f, 0.f,
+         //0.5f, -0.5f, 0.0f,
+         //-0.5f, -0.5f, 0.0f,
+         // 0.0f,  0.5f, 0.0f,
+         // -0.5f, 0.5f, 0.0f,
+    };
+
+     float indices[] = {
+        0,1,2,
+        2,3,1
+    };
+
+    GLuint VAO = 0, VBO = 0, EBO = 0;
+    // 注册三个data
+    glGenVertexArrays(1,&VAO);// 两个参数，第一个代表要几个
+    glGenBuffers(1, &VBO);//VBO
+    glGenBuffers(1, &EBO);
+    glBindVertexArray(VAO);// 注册后需要立刻绑定，因为后面的操作要绑定到当前的VAO上面
+    glBindBuffer(GL_ARRAY_BUFFER,VBO);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glVertexAttribPointer(0,3, GL_FLOAT,GL_FALSE,6*sizeof(float),(void*)0);
+    glEnableVertexAttribArray(0); // 定义一个参数并启用
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6* sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1); // 定义一个参数并启用
+
+
+
+
+    int success;
+    char infoLog[1024];
+
+    // shader
+    GLuint shaderProgram = glCreateProgram();
+    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+    std::string vertexSourceCoded;
+    const char* vertexSourceCodedC;
+    std::string fragmentSourceCode;
+    const char* fragmentSourceCodeC;
+
+    std::ifstream vShaderFile;
+    std::ifstream fShaderFile;
+
+    vShaderFile.open(DEFAULT_VERTEX_FILE_PATH);
+    std::stringstream vst;
+    vst << vShaderFile.rdbuf();
+    vShaderFile.close();
+    vertexSourceCoded = vst.str();
+    vertexSourceCodedC = vertexSourceCoded.c_str();
+    std::stringstream vst2;
+    fShaderFile.open(DEFAULT_FRAGMENT_FILE_PATH);
+    vst2 << fShaderFile.rdbuf();
+    fShaderFile.close();
+    fragmentSourceCode = vst2.str();
+    std::cout << fragmentSourceCode << std::endl;
+
+    fragmentSourceCodeC = fragmentSourceCode.c_str();
+
+    glShaderSource(vertexShader,1,&vertexSourceCodedC,NULL);
+    glCompileShader(vertexShader);
+    glGetShaderiv(vertexShader,GL_COMPILE_STATUS,&success);
+
+    if (!success) {
+        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+        return -1;
+    }
+
+    glShaderSource(fragmentShader,1,&fragmentSourceCodeC,NULL);
+    glCompileShader(fragmentShader);
+    glGetShaderiv(fragmentShader,GL_COMPILE_STATUS,&success);
+    if (!success) {
+        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+        return -1;
+    }
+
+    glAttachShader(shaderProgram,vertexShader);
+    glAttachShader(shaderProgram,fragmentShader);
+    glLinkProgram(shaderProgram);
+
+    glGetProgramiv(shaderProgram,GL_LINK_STATUS,&success);
+    if (!success) {
+        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+    }
+    glDeleteShader(fragmentShader);
+    glDeleteShader(vertexShader);
+
+    //主循环
+    while (!glfwWindowShouldClose(window)) {
+        // do something...
+        processInput(window);
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT); // 清屏
+        
+        glUseProgram(shaderProgram);
+        glBindVertexArray(VAO);         
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        //glDrawArrays(GL_TRIANGLES,0,3);
+        //glDrawElements(GL_TRIANGLES,6, GL_UNSIGNED_INT,0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
+    glDeleteProgram(shaderProgram);
+    glfwTerminate();
+    return 0;
+}
+```
+
+一开始我还没看出问题，直到运行时，怎么也出不来想要的图像。我就感觉事态不对了。各种翻看昨天的笔记，代码，逐行对照，都没有结果。
+**在尝试搜索答案未果，进群找人无人理睬的情况下，我开始了把昨天的代码逐行复制到这里查看异常。最后结果出来了：**
+```c++
+    // 这里是int, int,int
+    // float indices[] = {
+    unsigned int indices[] = {
+        0,1,2,
+        2,3,1
+    };
+```
+我这里定义成了float。。
+这里，indices代表参数下标，所以必须是整数int，我不知道脑子抽什么风了把这里写成了float。
+以此为戒吧。被自己蠢哭
