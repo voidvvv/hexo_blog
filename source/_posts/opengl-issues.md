@@ -13,6 +13,10 @@ tags:
 ![2024-03-02T220734](2024-03-02T220734.png)
 纯粹为了记录自己的愚蠢
 <!-- more -->
+- [2024-03-04](#2024-03-04)
+- [2024-03-05 凌晨](#2024-03-05-凌晨)
+- [03-10 glVertexAttribPointer](#03-10-glvertexattribpointer)
+
 
 # 2024-03-04
 本来想复习一下周末的学习成果的，在没有使用EBO的时候，很开熏，代码一切正常。
@@ -224,3 +228,18 @@ int test_0304() {
 	fragmentSourceCodeC = fragmentSourceCode.c_str();
 ```
 暂不明确原因，应该是与c++底层的实现有关.
+
+# 03-10 glVertexAttribPointer
+记录一个坑，表现是渲染出的3d物体能够正常显示模型 ，但是无法显示显示纹理材质。
+原因是这个方法：
+```c++
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+```
+
+<span style='color:red'>
+    这里面的最后一个参数，起始位置偏移量需要强转成(void*),并且，<span style='font-weight:bold'>长度是参数个数 × 参数类型长度</span>
+    </span>
