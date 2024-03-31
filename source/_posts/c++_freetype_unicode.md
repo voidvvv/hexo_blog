@@ -195,3 +195,4 @@ void CharacterManager::create(std::string &text)
 但是对于wchar，可能windows底层并没有对其优化，想要展示还需要我们开发做一些其他工作。
 至于java为什么即使使用宽字节也可以正常展示中文，我猜测可能是虚拟机（VM）底层对其进行了优化，使其能够将宽字节正确处理成unicode。
 
+最后附上[项目地址](https://github.com/voidvvv/LinkA)
