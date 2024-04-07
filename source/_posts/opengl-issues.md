@@ -17,6 +17,7 @@ tags:
 - [2024-03-05 凌晨](#2024-03-05-凌晨)
 - [03-10 glVertexAttribPointer](#03-10-glvertexattribpointer)
 - [2024-03-12 凌晨](#2024-03-12-凌晨)
+- [2024-04-07 记录一次动态设置顶点数组的问题排查](#2024-04-07-记录一次动态设置顶点数组的问题排查)
 
 
 # 2024-03-04
@@ -249,3 +250,187 @@ int test_0304() {
 两个低级错误：
 1. 学习光照渲染的时候，最后一步渲染出来的界面只有光源cube，没有被照亮物体。将被光源渲染代码去掉发现屏幕只会渲染没有经过矩阵变换的原始vertex顶点，并且颜色为白色。排查了好半天，最后跟教程源码比对发现，片段着色器居然少加了一个in参数，这个参数本应该是从顶点着色器传入给片段着色器的，但是片段着色器没有声明这个参数，导致渲染异常。但是这个异常很诡异。大晚上的着实吓着我了。
 2. 对矩阵不熟悉。在c++代码中使用位移向量构造灯源的model矩阵后，为了把灯源位置传入给物体着色器，我在代码中又使用变换后的transform矩阵乘了位移向量然后转成vec3传入，导致最后的结果偏差的有些离谱.
+
+# 2024-04-07 记录一次动态设置顶点数组的问题排查
+在写自己的[小游戏](https://github.com/voidvvv/LinkA)的时候，我想要添加一个功能，就是在两个方块相连接消除的时候，显示两个方块相连的路线。
+算法方面，我选择了AStar寻路算法，这方面写的头晕眼花，但是问题不大。
+最后渲染的时候，却无论如何也渲染不出来。
+我是手写了一个basicRender来渲染的，所以理所当然的我就怀疑是我的render写的有问题,下面就是我的render:
+```c++
+#ifndef __BASICRENDER_H__
+#define __BASICRENDER_H__
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <iostream>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include "Camera.h"
+
+#include "Shader.h"
+
+
+
+// render use for rendering basic shape, include line, dot and rectangle
+class BasicRender
+{
+private:
+    float vertex[5000];
+    int vIndex;
+    int vSize;
+    GLuint VAO;
+    GLuint VBO;
+    ShaderProgram *shader; 
+    void setVec3(glm::vec3);
+    unsigned int vertexCount;
+
+public:
+    BasicRender(ShaderProgram *shader);
+
+    void initialData();
+
+    void drawLine(glm::vec3 start,glm::vec3 end, Camera* camera , glm::vec3 color1 = glm::vec3(1.f), glm::vec3 color2 = glm::vec3(1.f));
+    void drawLine(glm::vec2 start,glm::vec2 end, Camera* camera , glm::vec3 color1 = glm::vec3(1.f), glm::vec3 color2 = glm::vec3(1.f));
+
+    // void drawFillLine();
+};
+
+#endif // __BASICRENDER_H__
+```
+
+cpp:
+```c++
+#include "BasicRender.h"
+
+#define Point GL_POINTS
+#define Line GL_LINES
+#define Filled GL_TRIANGLES
+
+void BasicRender::setVec3(glm::vec3 v3)
+{
+    vertex[vIndex++] = v3[0];
+    vertex[vIndex++] = v3[1];
+    vertex[vIndex++] = v3[2];
+    vertexCount++;
+}
+
+BasicRender::BasicRender(ShaderProgram *_shader)
+    : shader(_shader), VAO(0)
+{
+    vertexCount = 0;
+    vIndex = 0;
+}
+
+void BasicRender::initialData()
+{
+
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, 600 * sizeof(float), NULL, GL_DYNAMIC_DRAW);
+    // postion
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
+    glEnableVertexAttribArray(0);
+    // color
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+    // glBindBuffer(GL_ARRAY_BUFFER,0);
+    glBindVertexArray(0);
+}
+
+void BasicRender::drawLine(glm::vec3 start, glm::vec3 end,
+
+                           Camera *camera, glm::vec3 color1, glm::vec3 color2)
+{
+    vertexCount = 0;
+    vIndex = 0;
+    // bind matrix
+    shader->use();
+    glBindVertexArray(VAO);
+    shader->setUniformMat4("projection", camera->getProjectionMatrix());
+    // shader->setUniformMat4("projection", glm::mat4(1.f));
+
+    shader->setUniformMat4("view", camera->getViewMatrix());
+    // shader->setUniformMat4("view", glm::mat4(1.f));
+
+    shader->setUniformMat4("model", glm::mat4(1.f));
+
+    // position
+    setVec3(start);
+    // setVec3(glm::vec3(0.f));
+    setVec3(color1);
+
+    setVec3(end);
+    // setVec3(glm::vec3(1.f));
+    setVec3(color2);
+
+
+    glBufferSubData(GL_ARRAY_BUFFER, 0, vIndex * sizeof(float), vertex);
+
+    glDrawArrays(GL_LINES, 0, 2);
+
+    glBindVertexArray(0);
+}
+
+void BasicRender::drawLine(glm::vec2 start, glm::vec2 end, Camera *camera, glm::vec3 color1,
+                           glm::vec3 color2)
+{
+    drawLine(glm::vec3(start, 0.f), glm::vec3(end, 0.f), camera, color1, color2);
+}
+```
+我就怀疑是动态设置顶点数组无法这么`glBufferSubData`设置,就各种搜索，各种改。但是还是没有改变，仍然无法渲染。
+最后我开始怀疑不是render的问题了，为了确认我的想法，于是我就把顶点在方法设置中写死，view和projection矩阵设置为标准矩阵（上面的注释里的内容）,然后开始渲染，神奇的是，竟然成功的渲染出了一条线段。
+于是乎，我确认了我的render是没有问题的，自然我就开始查找我算法获取到的路径了。
+首先，我加了一个标准输出来查看找出的路劲中心点信息：
+```c++
+void printPath(std::vector<Card*> path){
+    std::cout<< "----"<<std::endl;
+    for (Card* c:path){
+        std::cout<< c->center.x<< " - "<< c->center.y <<std::endl;
+    }
+        
+
+    std::cout<< "----"<<std::endl;
+};
+```
+然后我在查找路径出来的地方来打印信息:
+```c++
+                bool b = outer->pathFinder->searchNodePath(extraCard.get(), selecedCard.get(), Game_Heuristic, Game_ShouldStop, outer->linkAPath);
+                std::cout << "A: X - [" << extraCard.get()->x << "]  Y - [" << extraCard.get()->y << "]  B: x - [" << selecedCard.get()->x << "]   y- [" << selecedCard.get()->y << "] reseult: " << b << std::endl;
+
+                if (b)
+                {
+                    std::cout << "outer->linkAPath size: " << outer->linkAPath.size() << std::endl;
+                    printPath(outer->linkAPath);
+                    outer->showPath = true;
+                    events->sendMessaage(_CARD_SUCCESS_MATCH, NULL, extraCard.get(), outer);
+                    events->sendMessaage(_CARD_SUCCESS_MATCH, NULL, selecedCard.get(), outer);
+                }
+```
+结果令我大吃一惊，所有节点的中心坐标完全一样，也就是说，之前并不是没有渲染路径，而是路径全部渲染到了一个像素点上，我看不到。
+然后我就跑到给card设置中心点的位置看了下:
+```C++
+        std::shared_ptr<Card> objPtr = objs[i];
+        int c_col = i % column;
+        int c_row = i / column;
+
+        objPtr.get()->position.x = cardGapx * (c_col + 1) + cardWidth * c_col + cardsOrigin.x;
+        objPtr.get()->position.y = cardGapy * (c_row + 1) + c_row * cardHeight + cardsOrigin.y;
+
+        objPtr.get()->size.x = cardWidth;
+        objPtr.get()->size.y = cardHeight;
+
+        // 啊 这
+        objPtr.get()->center.x = position.x + cardWidth/2;
+        objPtr.get()->center.y = position.y + cardHeight/2;
+```
+这里的position是我Board的position，也就是整个连连看地盘的position，每个card都这么设置，那么每个card自然都是同样的坐标。正确的设置应该是:
+```c++
+        objPtr.get()->center.x = objPtr.get()->position.x + cardWidth/2;
+        objPtr.get()->center.y = objPtr.get()->position.y + cardHeight/2;
+```
+然后一段困扰我一下午的排查就告一段落了。哎，粗心大意害死人
