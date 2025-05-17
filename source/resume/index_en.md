@@ -1,87 +1,109 @@
 ---
-title: 个人简历
+title: Zhao Kaijie - Senior Java Developer
 ---
 
-# 赵凯杰 | Java高级开发工程师
+<div align="center">
+<a href="/resume/">Chinese Version </a>
+ </div>
+<!-- [English Version](/resume/index_en) | [PDF Download](#) <br> -->
 
-📧 **19370986818@163.com** | 📞 **19370986818**  
-🌐 [个人主页](https://voidvvv.github.io/) | 🏠 **现居上海**  
-🎓 **东华理工大学 | 本科** | 👨‍💻 **7年工作经验**
 
----
 
-## 🔍 核心优势
-- 全栈Java技术专家（SE/EE/Spring生态）
-- 分布式系统架构师（微服务/高并发/性能优化）
-- 携程2021黑客松编程大赛冠军
-- 复杂业务系统开发经验（金融/旅游/电商）
-
----
-
-## 🛠️ 技术栈
-
-### 后端开发
-**精通**：  
-Java | Spring Boot | Spring Cloud | MyBatis | JVM调优 | 多线程编程  
-
-**熟练**：  
-Redis（分布式锁/缓存） | RabbitMQ | ElasticSearch | Apollo配置中心 | Oracle/MySQL（性能优化）  
-
-### 架构能力
-微服务架构（Eureka） | SOA | 分布式事务 | AOP编程 | 高并发设计  
-
-### 其他技能
-前端开发（Vue/jQuery） | 安卓开发基础 | C++基础  
+<div align="center">
+📧 19370986818@163.com | 📞 19370986818 | 📍 Shanghai  
+<br>🌐 <a href="https://voidvvv.github.io/">Personal Blog</a> <br> 🏢 6+ Years Backend Development Experience  
+🎓 East China University of Technology
+</div>
 
 ---
 
-## 💼 工作经历
-
-### **上海花旗金融** | 高级开发工程师 *(2022.9-至今)*  
-- 主导金融核心系统架构设计与开发
-- 待补充具体项目细节
-
-### **携程旅行网** | 高级后端工程师 *(2021.1-2022.9)*  
-**火车票电子客票系统**  
-- 主导开发分布式票务处理系统（日均订单50w+）
-- 实现功能：  
-  ✅ 基于Redis+MQ的抢票/改签系统（成功率提升40%）  
-  ✅ 财务自动对账系统（误差率<0.1%）  
-  ✅ 高并发订单分发架构（QPS 3000+）  
-- 技术亮点：  
-  🔹 分布式锁设计 | 数据库乐观锁 | 异步任务拆分  
-  🔹 SQL查询优化（响应时间降低65%）  
-
-### **平安消费金融** | Java中级工程师 *(2020.1-2021.1)*  
-**风控系统**  
-- 创新采用AOP注解实现风控拦截（代码侵入性降低90%）
-- 设计Redis索引机制提升基础数据查询效率（TPS提升8倍）
-
-**支付系统**  
-- 开发公对公转账模块（日处理金额超2亿）
-- 实现定时任务幂等控制（失败重试机制）
+## 🏅 Core Competencies
+- **Full-stack Java Expert**: 6 years Java development experience, proficient in Spring ecosystem (**Spring Boot/Spring Cloud/Spring Data**) for building highly available systems. Solid understanding of data structures and design patterns.
+- **Architectural Design**: Led design of high-concurrency distributed systems with microservices architecture, implemented service decomposition and circuit-breaking mechanisms.
+- **Abstract Business System Design**: Capable of rapidly abstracting business requirements into system workflows for efficient development.
+- **Technical Innovation**: Lead designer of championship solution in Ctrip 2021 Hackathon Programming Competition.
+- **Industry Expertise**: Specialized in fintech domain with deep understanding of risk control systems and payment clearing architectures.
+- **Code Excellence**: Contributor to open-source documentation, passionate about algorithms and clean code.
 
 ---
 
-## 🏆 项目成就
+## 🛠️ Technical Stack
 
-### 携程火车票系统
-- **技术架构**：SpringBoot+MyBatis+Redis+MQ+ES  
-- **核心贡献**：  
-  - 开发抢票功能：通过MQ分片+延时队列实现毫秒级响应  
-  - 支付模块：双锁机制（Redis分布式锁+数据库乐观锁）保障资金安全  
-  - [项目代码](https://github.com/reactivegroup/capa-bff)
+### Backend Technologies
 
-### 平安金融系统
-- **开户系统**：  
-  - 实现银行二类户开户流程（开户成功率99.8%）  
-  - Apollo动态配置实现多银行渠道切换  
-- **进件系统改造**：  
-  - 流程引擎优化（审批时效缩短60%）  
+**Core Frameworks**  
+`Spring Boot` `MyBatis Plus` `Spring JPA` `Spring Security` `Quartz` `SLF4J`
+
+**Architecture**  
+`Spring Cloud` `Microservices` `Distributed Transactions` `Circuit Breaking` `Nacos`
+
+**Middleware**  
+`Redis` `KafkaMQ` `Apollo`
+
+### Databases
+`Oracle` `MySQL 8.0` `SQL Server` `SQL Optimization` `Read/Write Separation`
+
+### Engineering Capabilities
+`JVM Tuning` `CI/CD Pipeline` `Jenkins` `Docker` `K8S`
+
+### Technical Literacy
+**Continuously learning through deep-dive analysis of Spring Framework source code (English documentation). Capable of quickly mastering new open-source projects. Expert in applying design patterns.**
 
 ---
 
-## 📌 附加信息
-- **技术影响力**：阅读JDK/Spring源码，技术博客作者
-- **语言能力**：英语CET-6（技术文档阅读编写）
-- **职业特质**：代码洁癖 | 架构思维 | 技术驱动业务
+## 💼 Professional Experience
+
+### 🏦 Citigroup Finance (Shanghai) | Senior Software Engineer *(2022.09 - Present)*
+**Financial Transaction Systems Department** | Real Estate Finance
+
+- **Business Systems**
+  - Managed **Transaction Management Backend System** (SpringBoot) maintenance and iterations
+  - Developed **Facility Management System** (SpringBoot + Statemachine) improving operational efficiency by 100%
+  - Created **BankerGoal System** (SpringBoot + SQL) for personnel management and data analytics, recognized by clients
+  - Built **Loan Application Statistics System** (SpringBoot + Kafka + SQL) enhancing processing efficiency by 50%
+
+- **Technical Contributions**
+  - Developed **Historical Data Comparison Component** widely adopted across Citigroup backend services
+  - Designed **Polymorphic Distributed Lock** component supporting multiple implementations
+
+### ✈️ Ctrip | Senior Backend Engineer *(2021.01 - 2022.09)*
+**Transportation Business Unit** | Rail Ticketing
+
+**Responsibilities**
+- Owned development and maintenance of rail ticketing system components
+- Conducted code reviews and frontend page development for business systems
+- Designed system interface standards and implementation
+- Collaborated with product team on development planning
+- Monitored production systems to prevent failures
+
+**Key Projects**:  
+**E-Ticket Platform Development**
+- Led development of core modules including order distribution, supplier management, and financial reconciliation
+- Implemented Redis-based distributed locking and asynchronous data processing with MQ
+- Optimized SQL queries for ticket reservation system, achieving 3x performance improvement
+- Developed payment module using Redis distributed locks and database optimistic locking
+
+### 🏦 Ping An Consumer Finance | Java Engineer *(2020.01 - 2021.01)*
+**Risk Control Technology Department** | FinTech
+
+**Key Contributions**
+- **Risk Control System Integration**: Implemented AOP aspect for risk assessment with custom annotations
+- **Mall Order System**: Designed public transfer module using optimistic locking and Redis-based retry mechanism
+- **Basic Information Service**: Rebuilt data distribution system with Redis caching, improving query performance by 70%
+- **Account Opening System**: Developed bank account verification interfaces with Redis-based data validation
+
+---
+
+## 🏆 Technical Achievements
+- Champion of Ctrip 2021 Hackathon [Project](https://github.com/capa-cloud/capa-bff)
+
+---
+
+## 📚 Technical Influence
+- Open-source contributor (libgdx-doc)
+
+---
+
+## 📌 Additional Information
+- **English Proficiency**: Fluent in technical documentation reading
+- **Technical Pursuits**: Continuously researching various architectures. Exploring OpenGL and Java game framework [LIBGDX](https://libgdx.com/)

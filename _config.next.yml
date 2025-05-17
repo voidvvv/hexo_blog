@@ -102,7 +102,7 @@ menu:
   categories: /categories/ || fa fa-th
   archives: /archives/ || fa fa-archive
   整合: /unify/ || fa fa-home
-  我的简历: /resume/ || fa fa-file
+  About Me: /resume/index_en || fa fa-file
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap
   #commonweal: /404/ || fa fa-heartbeat
