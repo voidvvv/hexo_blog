@@ -16,6 +16,7 @@ docker 学习
 linux CentOs7 系统内核3.0以上
 # 安装
 [参照官方文档](https://docs.docker.com/engine/install/centos/)
+[Fedora] (https://docs.docker.com/engine/install/fedora/)
 
 ```shell
 ## 首先卸载老版本（如果有的话） 移除老版本
@@ -36,7 +37,11 @@ sudo yum-config-manager \
     https://download.docker.com/linux/centos/docker-ce.repo
     
 ## 国内阿里云镜像(推荐)
-sudo  yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+sudo  yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/fedora/docker-ce.repo
+
+## 或者
+sudo dnf config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/fedora/docker-ce.repo
+
 
 ## 更细yum软件包索引
 yum makecache fast
