@@ -92,6 +92,12 @@ title: Zhao Kaijie - Senior Java Developer
 - **Basic Information Service**: Rebuilt data distribution system with Redis caching, improving query performance by 70%
 - **Account Opening System**: Developed bank account verification interfaces with Redis-based data validation
 
+
+### 🍎 Shanxi Golden Pomegranate Network Technology Co., Ltd | Java Mid-Level Engineer (2018.01 - 2019.12)
+**Development Department​​** | Project Engineering
+Executed end-to-end backend code development for core systems, translating 50+ business requirements into production-ready solutions with 100% on-time delivery rate
+Optimized legacy codebase through standardized refactoring, reducing system error frequency by 35%
+
 ---
 
 ## 🏆 Technical Achievements
