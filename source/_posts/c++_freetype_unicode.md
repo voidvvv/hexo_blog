@@ -13,6 +13,9 @@ tags:
 
 # 解决方案
 直接先说解决方案，在从face中获取glyph时，使用wstring代替string或者char *，并且在渲染查找glyph时，也这么做:
+
+<!-- more -->
+
 ```c++
 
 void demo()

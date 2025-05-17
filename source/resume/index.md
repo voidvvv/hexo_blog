@@ -3,9 +3,11 @@ title: 赵凯杰 - Java高级开发工程师
 ---
 
 <div align="center">
-<a href="/resume/index_en">English Version </a>
+<a href="/resume/index_en">English Version </a> <br>
+<a href="/resume/index.pdf">PDF Download</a>
  </div>
-<!-- [English Version](/resume/index_en) | [PDF版本下载](#) <br> -->
+
+<!-- [PDF版本下载](/resume/index.pdf) <br> -->
 
 
 
@@ -18,7 +20,7 @@ title: 赵凯杰 - Java高级开发工程师
 ---
 
 ## 🏅 核心优势
-- **​Java全栈专家​​**：6年Java开发经验，熟练运用Spring全家桶（**SpringBoot/SpringCloud/SpringData**）构建高可用系统，坚持精进技术，熟悉数据结构以及设计模式
+- **​Java全栈专家​​**：7年Java开发经验，熟练运用Spring全家桶（**SpringBoot/SpringCloud/SpringData/Spring Security**）构建高可用系统，坚持精进技术，熟悉数据结构以及设计模式
 - **架构设计能力**：主导设计过高并发的分布式系统，具备微服务/高并发设计经验，落地微服务拆分与熔断限流机制
 - **抽象业务系统设计能力**: 能够快速且精确的对业务进行抽象，将其变为系统流程，快速进行业务开发
 - **技术创新力**：携程2021黑客松编程大赛冠军方案主设计师
@@ -60,8 +62,8 @@ title: 赵凯杰 - Java高级开发工程师
 - 业务
 负责**交易管理后台系统** （SpringBoot）的管理，日常维护，以及迭代。
 使用状态流转控制开发**Facility管理系统** （SpringBoot + statemachine），使得用户管理facility效率提升100%。
-使用数据统计开发**BankerGoal系统** （SpringBoot + SQL），方便用户更好的进行人员管理以及数据统计, 获得客户嘉奖
-负责开**发放款申请统计系统** （SpringBoot + Kafka + SQL）使得放款统计处理效率提升50%
+使用数据统计开发**BankerGoal系统** （SpringBoot + SQL Server），方便用户更好的进行人员管理以及数据统计, 获得客户嘉奖
+负责开**发放款申请统计系统** （SpringBoot + Kafka + SQL Server）使得放款统计处理效率提升50%
 
 
 - 技术

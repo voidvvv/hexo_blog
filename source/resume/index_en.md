@@ -3,10 +3,12 @@ title: Zhao Kaijie - Senior Java Developer
 ---
 
 <div align="center">
-<a href="/resume/">Chinese Version </a>
+<a href="/resume/">Chinese Version </a> <br>
+<a href="/resume/index_en.pdf">PDF Download</a>
  </div>
 <!-- [English Version](/resume/index_en) | [PDF Download](#) <br> -->
 
+<!-- [PDF Download]() -->
 
 
 <div align="center">
@@ -18,7 +20,7 @@ title: Zhao Kaijie - Senior Java Developer
 ---
 
 ## 🏅 Core Competencies
-- **Full-stack Java Expert**: 6 years Java development experience, proficient in Spring ecosystem (**Spring Boot/Spring Cloud/Spring Data**) for building highly available systems. Solid understanding of data structures and design patterns.
+- **Full-stack Java Expert**: 7 years Java development experience, proficient in Spring ecosystem (**Spring Boot/Spring Cloud/Spring Data/Spring Security**) for building highly available systems. Solid understanding of data structures and design patterns.
 - **Architectural Design**: Led design of high-concurrency distributed systems with microservices architecture, implemented service decomposition and circuit-breaking mechanisms.
 - **Abstract Business System Design**: Capable of rapidly abstracting business requirements into system workflows for efficient development.
 - **Technical Innovation**: Lead designer of championship solution in Ctrip 2021 Hackathon Programming Competition.
@@ -59,8 +61,8 @@ title: Zhao Kaijie - Senior Java Developer
 - **Business Systems**
   - Managed **Transaction Management Backend System** (SpringBoot) maintenance and iterations
   - Developed **Facility Management System** (SpringBoot + Statemachine) improving operational efficiency by 100%
-  - Created **BankerGoal System** (SpringBoot + SQL) for personnel management and data analytics, recognized by clients
-  - Built **Loan Application Statistics System** (SpringBoot + Kafka + SQL) enhancing processing efficiency by 50%
+  - Created **BankerGoal System** (SpringBoot + SQL Server) for personnel management and data analytics, recognized by clients
+  - Built **Loan Application Statistics System** (SpringBoot + Kafka + SQL Server) enhancing processing efficiency by 50%
 
 - **Technical Contributions**
   - Developed **Historical Data Comparison Component** widely adopted across Citigroup backend services
