@@ -18,6 +18,9 @@ jobs:
       - name: 部署Hexo
         run: |
           npm install -g hexo-cli
-          hexo clean
-          hexo generate
-          hexo deploy
+          npm run clean
+          npm run install
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
