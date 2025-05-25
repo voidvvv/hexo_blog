@@ -5,6 +5,9 @@ on:
       - main  # 或 'master'，根据实际情况选择
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: 检查分支
