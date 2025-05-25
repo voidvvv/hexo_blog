@@ -14,10 +14,10 @@ jobs:
       - name: 安装Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "18.15"  # 根据实际情况选择Node.js版本
+          node-version: "16"  # 根据实际情况选择Node.js版本
       - name: 部署Hexo
         run: |
-          npm install -g hexo-cli
+          npm install
           npm run clean
           npm run install
       - name: Upload Pages artifact
