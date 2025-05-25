@@ -20,3 +20,7 @@ jobs:
           npm install -g hexo-cli
           npm run clean
           npm run install
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
