@@ -17,7 +17,7 @@ jobs:
           node-version: "16"  # 根据实际情况选择Node.js版本
       - name: 部署Hexo
         run: |
-          npm install
+          npm ci
           npm run clean
           npm run install
       - name: Upload Pages artifact
